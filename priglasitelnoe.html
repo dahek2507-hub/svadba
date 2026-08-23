@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Приглашение на свадьбу</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: #fdf9f6;
+            color: #2c2c2c;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .invitation {
+            background: #ffffff;
+            border-radius: 32px;
+            padding: 50px 30px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+            margin-bottom: 30px;
+        }
+        .invitation .date-top {
+            font-size: 1.1rem;
+            letter-spacing: 4px;
+            color: #b8926c;
+            font-weight: 300;
+        }
+        .invitation h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.8rem, 10vw, 4.8rem);
+            font-weight: 700;
+            color: #2c2c2c;
+            margin: 10px 0 5px;
+            letter-spacing: 2px;
+        }
+        .invitation h1 span {
+            color: #b8926c;
+        }
+        .invitation .subtitle {
+            font-size: 1.2rem;
+            letter-spacing: 6px;
+            color: #7a6b5e;
+            font-weight: 300;
+            margin-bottom: 25px;
+        }
+        .invitation .text {
+            max-width: 550px;
+            margin: 0 auto 30px;
+            color: #4d4d4d;
+            font-weight: 300;
+            font-size: 1.05rem;
+        }
+
+        .calendar {
+            display: inline-block;
+            background: #f5f0eb;
+            border-radius: 40px;
+            padding: 12px 30px;
+            margin: 10px 0 20px;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            color: #3d352e;
+        }
+        .calendar strong {
+            font-weight: 600;
+        }
+
+        .section {
+            background: #ffffff;
+            border-radius: 32px;
+            padding: 40px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+        }
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 25px;
+            color: #2c2c2c;
+            letter-spacing: 1px;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 2px;
+            background: #b8926c;
+            margin: 12px auto 0;
+        }
+        .section-sub {
+            text-align: center;
+            color: #6b6258;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .place-photo {
+            width: 100%;
+            border-radius: 24px;
+            margin: 15px 0 10px;
+            background: #eae3db;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+        }
+        .place-address {
+            text-align: center;
+            color: #6b6258;
+            font-size: 1.05rem;
+            margin-top: 8px;
+        }
+        .place-address a {
+            color: #b8926c;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 4px;
+            padding: 6px 20px;
+            border: 1.5px solid #b8926c;
+            border-radius: 40px;
+            transition: 0.2s;
+        }
+        .place-address a:hover {
+            background: #b8926c;
+            color: white;
+            text-decoration: none;
+        }
+
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 10px;
+        }
+        .timeline-item {
+            display: flex;
+            align-items: baseline;
+            gap: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0ebe4;
+        }
+        .timeline-item:last-child {
+            border-bottom: none;
+        }
+        .timeline-time {
+            font-weight: 600;
+            color: #b8926c;
+            min-width: 70px;
+            font-size: 1.1rem;
+        }
+        .timeline-desc {
+            color: #3d352e;
+        }
+        .timeline-desc small {
+            display: block;
+            font-weight: 300;
+            color: #7a6b5e;
+            font-size: 0.9rem;
+            margin-top: 2px;
+        }
+
+        .dresscode {
+            background: #f8f3ee;
+            padding: 30px;
+            border-radius: 28px;
+            text-align: center;
+            font-weight: 300;
+            color: #3d352e;
+        }
+        .dresscode .ornament {
+            font-size: 1.8rem;
+            letter-spacing: 14px;
+            color: #b8926c;
+            margin-bottom: 8px;
+        }
+
+        /* ===== МЕНЮ С КАРТИНКАМИ ===== */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 16px;
+            margin-top: 10px;
+        }
+        .dish-card {
+            background: #faf8f6;
+            border-radius: 20px;
+            padding: 12px 10px 16px;
+            text-align: center;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.15s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            position: relative;
+        }
+        .dish-card:hover {
+            background: #f3eee7;
+            transform: translateY(-2px);
+        }
+        .dish-card.selected {
+            border-color: #b8926c;
+            background: #efe8df;
+            box-shadow: 0 6px 16px rgba(184, 146, 108, 0.2);
+        }
+        .dish-card.selected::after {
+            content: "✓";
+            position: absolute;
+            top: 6px;
+            right: 10px;
+            font-size: 18px;
+            color: #b8926c;
+            font-weight: 700;
+        }
+        .dish-card.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        .dish-card img {
+            width: 100%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            border-radius: 16px;
+            background: #ddd6cc;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .dish-name {
+            font-weight: 600;
+            font-size: 14px;
+            color: #1e1b16;
+            line-height: 1.3;
+        }
+        .dish-ingredients {
+            font-size: 11px;
+            color: #7a7266;
+            margin-top: 3px;
+            line-height: 1.3;
+        }
+
+        .category-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #2d2a24;
+            background: #f0ebe4;
+            display: inline-block;
+            padding: 4px 24px 6px 24px;
+            border-radius: 40px;
+            margin: 20px 0 12px 0;
+            letter-spacing: 0.3px;
+        }
+        .menu-counter {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.95rem;
+            color: #6b6258;
+        }
+        .menu-counter span {
+            background: #f0ebe4;
+            padding: 6px 20px;
+            border-radius: 40px;
+        }
+        .menu-hint {
+            font-size: 0.9rem;
+            color: #b8926c;
+            text-align: center;
+            margin-top: 6px;
+            font-weight: 400;
+        }
+        .info-text {
+            background: #f8f3ee;
+            padding: 18px 25px;
+            border-radius: 20px;
+            text-align: center;
+            color: #3d352e;
+            font-size: 1.05rem;
+            margin: 10px 0 5px;
+        }
+        .info-text .ornament-small {
+            color: #b8926c;
+            letter-spacing: 6px;
+        }
+
+        .rsvp-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .rsvp-form label {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        .rsvp-form input,
+        .rsvp-form select {
+            padding: 14px 18px;
+            border: 2px solid #e0d6cc;
+            border-radius: 16px;
+            font-size: 16px;
+            background: #faf8f6;
+            transition: 0.2s;
+            width: 100%;
+        }
+        .rsvp-form input:focus,
+        .rsvp-form select:focus {
+            border-color: #b8926c;
+            outline: none;
+            background: white;
+        }
+        .rsvp-form button {
+            background: #b8926c;
+            color: white;
+            border: none;
+            padding: 16px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.2s;
+            letter-spacing: 1px;
+        }
+        .rsvp-form button:hover {
+            background: #a07d5c;
+            transform: scale(1.02);
+        }
+        .rsvp-form button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .result-area {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 16px;
+            display: none;
+            text-align: center;
+            font-weight: 500;
+        }
+        .result-area.success {
+            display: block;
+            background: #e8f0e7;
+            border-left: 6px solid #2b6b3a;
+        }
+        .result-area.error {
+            display: block;
+            background: #fdeaea;
+            border-left: 6px solid #b33;
+        }
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 0.8s ease infinite;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            .section {
+                padding: 25px 16px;
+            }
+            .invitation {
+                padding: 30px 16px;
+            }
+            .timeline-item {
+                flex-direction: column;
+                gap: 4px;
+            }
+            .menu-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- ========== 1. ПРИГЛАШЕНИЕ ========== -->
+        <div class="invitation">
+            <div class="date-top">04.09.2026</div>
+            <h1>Даниил <span>&</span> Кристина</h1>
+            <div class="subtitle">РОДНЫЕ И БЛИЗКИЕ</div>
+            <p class="text">
+                Совсем скоро наступит один из самых важных дней в нашей жизни — день нашей свадьбы!<br>
+                Мы будем счастливы разделить этот момент с вами и приглашаем вас быть рядом! ❤️
+            </p>
+            <div class="calendar">
+                <strong>СЕНТЯБРЬ 2026</strong> &nbsp;—&nbsp; 4
+            </div>
+        </div>
+
+        <!-- ========== 2. МЕСТО ПРОВЕДЕНИЯ (С ФОТО И ССЫЛКОЙ НА КАРТУ) ========== -->
+        <div class="section">
+            <h2 class="section-title">Место проведения</h2>
+            <img class="place-photo" src="sobor.jpg" alt="Собор Николо-Богоявленский">
+            <p style="text-align:center; font-weight:500; font-size:1.2rem; margin-top:8px;">
+                "Николо-Богоявленский" Морской собор
+            </p>
+            <div class="place-address">
+                📍 г. Санкт-Петербург, Никольская площадь, дом 1/3
+                <br>
+                <a href="https://yandex.ru/maps/?text=Санкт-Петербург, Никольская площадь, дом 1/3" target="_blank" rel="noopener noreferrer">
+                    🗺️ Показать на карте
+                </a>
+            </div>
+        </div>
+
+        <!-- ========== 3. ПРОГРАММА ДНЯ ========== -->
+        <div class="section">
+            <h2 class="section-title">Программа дня</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-time">15:30</div>
+                    <div class="timeline-desc">
+                        <strong>СБОР ГОСТЕЙ</strong>
+                        <small>ЗАГС (г. Санкт-Петербург, Никольская площадь, дом 1/3). Просим вас не опаздывать 🙏</small>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">15:55</div>
+                    <div class="timeline-desc">
+                        <strong>ВЕНЧАНИЕ</strong>
+                        <small>Собор «Николо-Богоявленский». Готовьтесь к эмоциям!</small>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">17:00</div>
+                    <div class="timeline-desc">
+                        <strong>ФОТОСЕССИЯ</strong>
+                        <small>Фотографирование у собора. Сохраним самые трогательные моменты 📸</small>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">18:00</div>
+                    <div class="timeline-desc">
+                        <strong>РЕСТОРАН</strong>
+                        <small>Ресторан «Мангал». Сбор гостей, аперитив, начало банкета</small>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">20:30</div>
+                    <div class="timeline-desc">
+                        <strong>ТОРТ</strong>
+                        <small>Сладкий момент вечера и красивое начало финальной части 🍰</small>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">21:00</div>
+                    <div class="timeline-desc">
+                        <strong>Завершение банкета</strong>
+                        <small>Дорогие наши, спасибо, что выбрали время разделить с нами этот день 🌅</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 4. ДРЕСС-КОД ========== -->
+        <div class="section">
+            <h2 class="section-title">Дресс-код</h2>
+            <div class="dresscode">
+                <div class="ornament">✦ ❀ ✦</div>
+                <p>
+                    В православной традиции белый цвет — символ чистоты и радости невесты.<br>
+                    Чтобы сохранить эту красоту и позволить ей сиять в этот день,<br>
+                    мы с уважением просим дам избегать белых, молочных, кремовых и других очень светлых оттенков.<br>
+                    Для мужчин белая рубашка — классика торжественного костюма, она более чем уместна.
+                </p>
+                <div class="ornament" style="margin-top:12px;">✦ ❀ ✦</div>
+            </div>
+        </div>
+
+        <!-- ========== 5. МЕНЮ БАНКЕТА ========== -->
+        <div class="section">
+            <h2 class="section-title">Меню банкета</h2>
+
+            <div class="info-text">
+                <span class="ornament-small">✦</span>
+                На банкете будут <strong>шашлыки, холодные и горячие закуски</strong>.
+                <br>Для вашего комфорта предлагаем выбрать понравившиеся блюда ниже.
+                <span class="ornament-small">✦</span>
+            </div>
+
+            <!-- Салаты (выбрать 3 из 4) -->
+            <div id="saladsContainer">
+                <div class="category-title">Салаты</div>
+                <div class="menu-grid" id="saladsGrid"></div>
+                <div class="menu-counter">Выбрано: <span id="saladsCount">0</span> из 3</div>
+                <div class="menu-hint">Можно выбрать не более 3</div>
+            </div>
+
+            <!-- Горячая закуска (выбрать 1 из 2) -->
+            <div id="hotAppetizerContainer">
+                <div class="category-title">Горячая закуска</div>
+                <div class="menu-grid" id="hotAppetizerGrid"></div>
+                <div class="menu-hint">Можно выбрать только 1</div>
+            </div>
+
+            <!-- Горячее блюдо (люля, выбрать 1 из 3) -->
+            <div id="mainCourseContainer">
+                <div class="category-title">Горячее блюдо</div>
+                <div class="menu-grid" id="mainCourseGrid"></div>
+                <div class="menu-hint">Люля из баранины / свинины / курицы — выберите 1</div>
+            </div>
+
+            <div style="margin-top: 25px; text-align:center; color:#6b6258; font-size:0.9rem;">
+                <span style="background:#f0ebe4; padding:6px 20px; border-radius:40px;">
+                    Всего выбрано: <span id="totalSelected">0</span> блюд
+                </span>
+            </div>
+        </div>
+
+        <!-- ========== 6. ФОРМА ПОДТВЕРЖДЕНИЯ ========== -->
+        <div class="section">
+            <h2 class="section-title">Вы приглашены</h2>
+            <p style="text-align:center; color:#4d4d4d; margin-bottom:20px;">
+                Пожалуйста, подтвердите своё присутствие до <strong>26 августа 2026 года</strong>
+            </p>
+            <form id="rsvpForm" class="rsvp-form">
+                <div>
+                    <label for="guestName">Ваше имя <span style="color:#b33;">*</span></label>
+                    <input type="text" id="guestName" placeholder="Напишите ваше имя" required>
+                </div>
+                <div>
+                    <label for="attendance">Вы будете на свадьбе?</label>
+                    <select id="attendance">
+                        <option value="да">Да, обязательно!</option>
+                        <option value="нет">Нет, не смогу прийти</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="drink">🥂 Какой напиток предпочитаете?</label>
+                    <input type="text" id="drink" placeholder="Игристое вино, морс, чай...">
+                </div>
+                <button type="submit" id="submitBtn">Отправить ответ</button>
+            </form>
+            <div id="result" class="result-area"></div>
+        </div>
+
+    </div>
+
+    <script>
+        // ================================================================
+        // 1. ДАННЫЕ ДЛЯ ВЫБОРА — СЮДА ДОБАВЛЯЙТЕ СВОИ ФОТО
+        // ================================================================
+
+        // Салаты (4 шт, выбрать 3)
+        const salads = [
+            { 
+                id: "sal1", 
+                name: "Цезарь с курицей", 
+                ingredients: "Салат айсберг, куриное филе, черри, сыр пармезан, соус цезарь, сухарики.",
+                photo: "salatone.jpg"   // <- СЮДА ВАШЕ ФОТО
+            },
+            { 
+                id: "sal2", 
+                name: "Праздничный салат", 
+                ingredients: "Куриное филе, ветчина, шампиньоны, салат айсберг, огурец, майонез",
+                photo: "salat2.jpg"   // <- СЮДА ВАШЕ ФОТО
+            },
+            { 
+                id: "sal3", 
+                name: "Оливье с говядиной", 
+                ingredients: "Классический салат с отварной говядиной",
+                photo: "salat3.jpg"   // <- СЮДА ВАШЕ ФОТО
+            },
+            { 
+                id: "sal4", 
+                name: "Салат с куриной печенью", 
+                ingredients: "Салатный микс, куриная печень, картофель фри, черри, маринованные опята, медово-горчичный соус",
+                photo: "salat4.jpg"   // <- СЮДА ВАШЕ ФОТО
+            }
+        ];
+        const MAX_SALADS = 3;
+
+        // Горячая закуска (2 шт, выбрать 1)
+        const hotAppetizers = [
+            { 
+                id: "ha1", 
+                name: "Жюльен - микс",
+                photo: "hot1.jpg"     // <- СЮДА ВАШЕ ФОТО
+            },
+            { 
+                id: "ha2", 
+                name: "Запеченный баклажан с моцареллой и томатами",
+                photo: "hot2.jpg"     // <- СЮДА ВАШЕ ФОТО
+            }
+        ];
+        const MAX_HOT_APP = 1;
+
+        // Горячее блюдо (люля, 3 шт, выбрать 1)
+        const mainCourses = [
+            { 
+                id: "mc1", 
+                name: "Люля из баранины",
+                photo: "lulya_baranina.jpg"   // <- СЮДА ВАШЕ ФОТО
+            },
+            { 
+                id: "mc2", 
+                name: "Люля из свинины",
+                photo: "lulya_svinina.jpg"    // <- СЮДА ВАШЕ ФОТО
+            },
+            { 
+                id: "mc3", 
+                name: "Люля из курицы",
+                photo: "lulya_kurica.jpg"     // <- СЮДА ВАШЕ ФОТО
+            }
+        ];
+        const MAX_MAIN = 1;
+
+        // ================================================================
+        // 2. ОТРИСОВКА КАРТОЧЕК С КАРТИНКАМИ
+        // ================================================================
+
+        function renderMenu(containerId, items, showIngredients = false) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            let html = '';
+            items.forEach(item => {
+                // Если фото есть — используем его, иначе заглушка
+                const imgSrc = item.photo || `https://placehold.co/300x300/e6dfd6/7a7266?text=${encodeURIComponent(item.name)}`;
+                let ingredientsHtml = '';
+                if (showIngredients && item.ingredients) {
+                    ingredientsHtml = `<div class="dish-ingredients">${item.ingredients}</div>`;
+                }
+                html += `
+                        <div class="dish-card" data-id="${item.id}" data-group="${containerId}">
+                            <img src="${imgSrc}" alt="${item.name}" loading="lazy">
+                            <div class="dish-name">${item.name}</div>
+                            ${ingredientsHtml}
+                        </div>
+                    `;
+            });
+            container.innerHTML = html;
+        }
+
+        renderMenu('saladsGrid', salads, true);
+        renderMenu('hotAppetizerGrid', hotAppetizers, false);
+        renderMenu('mainCourseGrid', mainCourses, false);
+
+        // ================================================================
+        // 3. ЛОГИКА ВЫБОРА (без изменений)
+        // ================================================================
+
+        const selected = {
+            salads: new Set(),
+            hotAppetizers: new Set(),
+            mainCourses: new Set()
+        };
+
+        const limits = {
+            salads: MAX_SALADS,
+            hotAppetizers: MAX_HOT_APP,
+            mainCourses: MAX_MAIN
+        };
+
+        function updateGroupUI(groupKey, containerId, countSpanId) {
+            const cards = document.querySelectorAll(`#${containerId} .dish-card`);
+            const selectedSet = selected[groupKey];
+            cards.forEach(card => {
+                const id = card.dataset.id;
+                card.classList.toggle('selected', selectedSet.has(id));
+                if (selectedSet.size >= limits[groupKey] && !selectedSet.has(id)) {
+                    card.classList.add('disabled');
+                } else {
+                    card.classList.remove('disabled');
+                }
+            });
+            if (countSpanId) {
+                document.getElementById(countSpanId).textContent = selectedSet.size;
+            }
+            updateTotalCounter();
+        }
+
+        function updateTotalCounter() {
+            const total = selected.salads.size + selected.hotAppetizers.size + selected.mainCourses.size;
+            document.getElementById('totalSelected').textContent = total;
+        }
+
+        document.addEventListener('click', function(e) {
+            const card = e.target.closest('.dish-card');
+            if (!card) return;
+            if (card.classList.contains('disabled')) return;
+
+            const groupContainer = card.closest('.menu-grid');
+            if (!groupContainer) return;
+
+            let groupKey = null;
+            let countSpanId = null;
+            if (groupContainer.id === 'saladsGrid') { groupKey = 'salads';
+                countSpanId = 'saladsCount'; } else if (groupContainer.id === 'hotAppetizerGrid') { groupKey =
+                    'hotAppetizers'; } else if (groupContainer.id === 'mainCourseGrid') { groupKey = 'mainCourses'; }
+            if (!groupKey) return;
+
+            const id = card.dataset.id;
+            const selectedSet = selected[groupKey];
+            const limit = limits[groupKey];
+
+            if (selectedSet.has(id)) {
+                selectedSet.delete(id);
+            } else {
+                if (selectedSet.size >= limit) {
+                    alert(`Вы можете выбрать не более ${limit} блюд в этой категории`);
+                    return;
+                }
+                selectedSet.add(id);
+            }
+            updateGroupUI(groupKey, groupContainer.id, countSpanId);
+        });
+
+        // Инициализация
+        updateGroupUI('salads', 'saladsGrid', 'saladsCount');
+        updateGroupUI('hotAppetizers', 'hotAppetizerGrid', null);
+        updateGroupUI('mainCourses', 'mainCourseGrid', null);
+
+        // ================================================================
+        // 4. ОТПРАВКА ФОРМЫ (замените SCRIPT_URL)
+        // ================================================================
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwyiWxY6cnY6GEagX_ROGnf5Teo7Kx0fv30gjpKZV35ZLmKhpxqGGxEu5VdR2mDbyPlrw/exec';
+
+        const rsvpForm = document.getElementById('rsvpForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const resultDiv = document.getElementById('result');
+
+        rsvpForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById('guestName').value.trim();
+            if (!name) {
+                alert('Пожалуйста, введите ваше имя');
+                document.getElementById('guestName').focus();
+                return;
+            }
+
+            const attendance = document.getElementById('attendance').value;
+            const drink = document.getElementById('drink').value.trim() || 'не указан';
+
+            const selectedDishes = [];
+            document.querySelectorAll('.dish-card.selected').forEach(card => {
+                selectedDishes.push(card.querySelector('.dish-name').textContent.trim());
+            });
+
+            const payload = {
+                name: name,
+                attendance: attendance,
+                dishes: selectedDishes,
+                drink: drink,
+                salads: Array.from(selected.salads),
+                hotAppetizers: Array.from(selected.hotAppetizers),
+                mainCourses: Array.from(selected.mainCourses)
+            };
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner"></span> Отправка...';
+            resultDiv.className = 'result-area';
+            resultDiv.style.display = 'none';
+
+            try {
+                await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                resultDiv.textContent = '✅ Спасибо! Ваш ответ получен. Ждём вас на свадьбе! 💕';
+                resultDiv.className = 'result-area success';
+                resultDiv.style.display = 'block';
+            } catch (err) {
+                resultDiv.textContent = '❌ Произошла ошибка. Попробуйте позже.';
+                resultDiv.className = 'result-area error';
+                resultDiv.style.display = 'block';
+                console.error(err);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Отправить ответ';
+                resultDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        });
+    </script>
+
+</body>
+</html>
